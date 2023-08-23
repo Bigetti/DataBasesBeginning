@@ -1,0 +1,123 @@
+create table dbo.Zhanr
+(
+zhanrID int primary key,
+zhanrName nvarchar(128) not null
+)
+
+insert into dbo.Zhanr(zhanrID, zhanrName) values (1, 'pop')
+insert into dbo.Zhanr(zhanrID, zhanrName) values (2, 'rock')
+insert into dbo.Zhanr(zhanrID, zhanrName) values (3, 'grang')
+
+
+create table dbo.Artist
+(
+artistID int primary key,
+artistName nvarchar(128) not null
+)
+
+
+insert into dbo.Artist(artistID, artistName) values (1, 'Malikov')
+insert into dbo.Artist(artistID, artistName) values (2, 'Nirvana')
+insert into dbo.Artist(artistID, artistName) values (3, 'Kirkorov')
+insert into dbo.Artist(artistID, artistName) values (4, 'Metallica')
+insert into dbo.Artist(artistID, artistName) values (5, 'Aerosmith')
+
+
+
+create table dbo.Album
+(
+albumID int primary key,
+albumName nvarchar(128) not null
+albumYear int not null
+)
+
+
+insert into dbo.Album(albumID, albumName, albumYear) values (1, 'popka moya', 2002)
+insert into dbo.Album(albumID, albumName, albumYear) values (2, 'vesna', 2003)
+insert into dbo.Album(albumID, albumName, albumYear) values (3, 'nevermind', 1998)
+insert into dbo.Album(albumID, albumName, albumYear) values (4, 'ballads', 1996)
+insert into dbo.Album(albumID, albumName, albumYear) values (5, 'best', 1999)
+insert into dbo.Album(albumID, albumName,albumYear) values (5, 'zaika moya', 2005)
+
+
+create table dbo.Tracks
+(
+trackID int primary key,
+trackName nvarchar(128) not null
+trackDuration varchar(10) not null
+trackAlbumId int references dbo.Album(albumID)
+)
+
+
+insert into dbo.Tracks(trackID, trackName, trackDuration, trackAlbumId ) values (1, 'crying', '4-11', 5)
+insert into dbo.Tracks(trackID, trackName, trackDuration, trackAlbumId ) values (2, 'entersadman', '5-02', 4)
+insert into dbo.Tracks(trackID, trackName, trackDuration, trackAlbumId ) values (3, 'TraLaLa', '3-23', 1)
+insert into dbo.Tracks(trackID, trackName, trackDuration, trackAlbumId ) values (4, 'sunnyday', '5-43', 2)
+insert into dbo.Tracks(trackID, trackName, trackDuration, trackAlbumId ) values (5, 'spirit', '3-44', 3)
+insert into dbo.Tracks(trackID, trackName, trackDuration, trackAlbumId ) values (6, 'whiskey', '4-55', 4)
+
+
+
+create table dbo.Compilation
+(
+compilationID int primary key,
+compilationName nvarchar(128) not null
+compilationYear int not null
+
+)
+
+
+insert into dbo.Compilation(compilationID, compilationName, compilationYear) values (1, 'Heavy', 2005)
+insert into dbo.Compilation(compilationID, compilationName, compilationYear) values (2, 'SweetRock', 2002)
+insert into dbo.Compilation(compilationID, compilationName, compilationYear) values (3, 'sheep songs', 2004)
+
+
+create table dbo.ArtistsGenres
+(
+zhanrID int references dbo.Zhanr(zhanrID),
+artistID int references dbo.Zhanr(artistID)
+primary key(zhanrID, artistID)
+
+)
+
+insert into dbo.ArtistsGenres(zhanrID, artistID) values (1, 1)
+insert into dbo.ArtistsGenres(zhanrID, artistID) values (1, 3)
+insert into dbo.ArtistsGenres(zhanrID, artistID) values (2, 4)
+insert into dbo.ArtistsGenres(zhanrID, artistID) values (2, 5)
+insert into dbo.ArtistsGenres(zhanrID, artistID) values (3, 2)
+
+
+create table ArtistAlbums
+(
+albumID int references dbo.Album(albumID),
+artistID int references dbo.Artist(artistID)
+primary key(albumID, artistID)
+
+)
+
+insert into ArtistAlbums(albumID, artistID) values (1, 3)
+insert into ArtistAlbums(albumID, artistID) values (2, 1)
+insert into ArtistAlbums(albumID, artistID) values (3, 2)
+insert into ArtistAlbums(albumID, artistID) values (4, 4)
+insert into ArtistAlbums(albumID, artistID) values (5, 4)
+insert into ArtistAlbums(albumID, artistID) values (5, 5)
+insert into ArtistAlbums(albumID, artistID) values (6, 3)
+
+
+
+
+create table CompilationTracks
+(
+compilationID int references dbo.Compilation(CompilationID),
+trackID int references dbo.Tracks(trackID)
+primary key(compilationID, trackID)
+
+)
+
+insert into CompilationTracks(compilationID, trackID) values (1, 2)
+insert into CompilationTracks(compilationID, trackID) values (1, 6)
+insert into CompilationTracks(compilationID, trackID) values (2, 1)
+insert into CompilationTracks(compilationID, trackID) values (2, 5)
+insert into CompilationTracks(compilationID, trackID) values (2, 6)
+insert into CompilationTracks(compilationID, trackID) values (3, 3)
+insert into CompilationTracks(compilationID, trackID) values (3, 4)
