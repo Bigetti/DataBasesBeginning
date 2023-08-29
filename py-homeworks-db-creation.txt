@@ -1,0 +1,11 @@
+create table if not exists Employee (
+employeeID SERIAL primary key,
+employeeName VARCHAR(255) not null,
+dep VARCHAR (255),
+managerID INT references Employee(employeeID)
+);
+
+insert INFO Employee (emplooyeeName, dep, managerID) values ('PetrIvanov', 'HR', 4) ON CONFLICT (emplooyeeName, dep, managerID) DO NOTHING;
+insert INFO Employee (emplooyeeName, dep, managerID) values ('AndreySidorov', 'IT', 1) ON CONFLICT (emplooyeeName, dep, managerID) DO NOTHING;
+insert INFO Employee (emplooyeeName, dep, managerID) values ('OlegDeripaska', 'IT', 1) ON CONFLICT (emplooyeeName, dep, managerID) DO NOTHING;
+insert INFO Employee (emplooyeeName, dep, managerID) values ('SemenSlepakov', 'Sales', NULL) ON CONFLICT (emplooyeeName, dep, managerID) DO NOTHING;
